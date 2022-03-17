@@ -1,1 +1,1 @@
-# A React frontend application that authenticates to a Django backend using access and refresh tokens
+# React Authentication with Access/Refresh Tokens
