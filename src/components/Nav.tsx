@@ -1,6 +1,46 @@
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { RootState } from "../redux/store";
+import { setAuth } from "../redux/authSlice";
 
 export const Nav = () => {
+  const auth = useSelector((state: RootState) => state.auth.value);
+  const dispatch = useDispatch();
+
+  // logout endpoint removes the cookies
+  const logout = async () => {
+    await axios.post("logout", {}, { withCredentials: true });
+
+    // clear the headers
+    axios.defaults.headers.common["Authorization"] = "";
+
+    dispatch(setAuth(false));
+  };
+
+  let links;
+
+  if (auth) {
+    links = (
+      <div className="text-end">
+        <Link to="/" className="btn btn-outline-light me-2" onClick={logout}>
+          Logout
+        </Link>
+      </div>
+    );
+  } else {
+    links = (
+      <div className="text-end">
+        <Link to="/login" className="btn btn-outline-light me-2">
+          Login
+        </Link>
+        <Link to="/register" className="btn btn-outline-light me-2">
+          Register
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <header className="p-3 bg-dark text-white">
       <div className="container">
@@ -12,15 +52,7 @@ export const Nav = () => {
               </Link>
             </li>
           </ul>
-
-          <div className="text-end">
-            <Link to="/login" className="btn btn-outline-light me-2">
-              Login
-            </Link>
-            <Link to="/register" className="btn btn-outline-light me-2">
-              Register
-            </Link>
-          </div>
+          {links}
         </div>
       </div>
     </header>
