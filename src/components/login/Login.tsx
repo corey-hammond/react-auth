@@ -29,7 +29,7 @@ export const Login = () => {
   let form;
 
   if (loginData?.id === 0) {
-    form = <LoginForm setLoginData={setLoginData} />;
+    form = <LoginForm success={success} setLoginData={setLoginData} />;
   } else {
     form = <AuthenticatorForm success={success} loginData={loginData} />;
   }
