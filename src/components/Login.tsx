@@ -1,5 +1,6 @@
 import axios from "axios";
 import { SyntheticEvent, useState } from "react";
+import { Link } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
 export const Login = () => {
@@ -11,7 +12,7 @@ export const Login = () => {
     e.preventDefault();
 
     const { data } = await axios.post(
-      "http://localhost:8000/api/login",
+      "login",
       {
         email,
         password,
@@ -19,6 +20,7 @@ export const Login = () => {
       { withCredentials: true }
     );
 
+    // set headers with access token from response
     axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
 
     setRedirect(true);
@@ -54,8 +56,12 @@ export const Login = () => {
           <label htmlFor="floatingPassword">Password</label>
         </div>
 
+        <div className="mb-3">
+          <Link to="/forgot-password">Forgot password?</Link>
+        </div>
+
         <button className="w-100 btn btn-lg btn-primary" type="submit">
-          Submit
+          Sign in
         </button>
       </form>
     </main>
