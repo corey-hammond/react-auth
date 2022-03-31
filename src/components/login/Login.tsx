@@ -1,7 +1,5 @@
-import axios from "axios";
-import { SyntheticEvent, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { setAuth } from "../../redux/authSlice";
 import { AuthenticatorForm } from "./AuthenticatorForm";

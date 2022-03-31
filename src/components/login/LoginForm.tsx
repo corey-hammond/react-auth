@@ -1,10 +1,7 @@
 import axios from "axios";
 import { useState, SyntheticEvent } from "react";
 import { Link } from "react-router-dom";
-import GoogleLogin, {
-  GoogleLoginResponse,
-  GoogleLoginResponseOffline,
-} from "react-google-login";
+import GoogleLogin from "react-google-login";
 
 export const LoginForm = (props: {
   setLoginData: Function;
@@ -32,13 +29,16 @@ export const LoginForm = (props: {
   };
 
   const onSuccess = async (googleUser: any) => {
-    const { status } = await axios.post(
+    const { data, status } = await axios.post(
       "google-auth",
       {
         token: googleUser.tokenId,
       },
       { withCredentials: true }
     );
+
+    // set headers with access token from response
+    axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
 
     if (status === 200) {
       props.success();

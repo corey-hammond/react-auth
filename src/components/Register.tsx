@@ -13,7 +13,7 @@ export const Register = () => {
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
-    await axios.post("http://localhost:8000/api/register", {
+    await axios.post("register", {
       first_name: firstName,
       last_name: lastName,
       email,
